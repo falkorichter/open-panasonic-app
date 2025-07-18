@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.panasonic.tvapp.sample"
+        version="1.0.0"
+        versionCode="1">
+    
+    <name>Panasonic TV Web App</name>
+    <description>
+        A sample web application for Panasonic Smart TVs demonstrating
+        basic functionality including navigation, media handling, and
+        TV-specific features.
+    </description>
+    
+    <author href="https://github.com/falkorichter/open-panasonic-app" 
+            email="developer@example.com">
+        Developer Name
+    </author>
+    
+    <!-- App icon -->
+    <icon src="assets/icons/icon.png" width="128" height="128" />
+    
+    <!-- App preferences -->
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="landscape" />
+    <preference name="fullscreen" value="true" />
+    <preference name="target-device" value="tv" />
+    
+    <!-- TV-specific configuration -->
+    <preference name="tv-resolution" value="1920x1080" />
+    <preference name="tv-safe-area" value="true" />
+    <preference name="remote-control" value="true" />
+    
+    <!-- Content configuration -->
+    <content src="index.html" />
+    
+    <!-- Feature access -->
+    <feature name="http://webinos.org/api/tv" required="false" />
+    <feature name="http://webinos.org/api/devicestatus" required="false" />
+    
+    <!-- Access permissions -->
+    <access origin="*" />
+    <allow-navigation href="*" />
+    
+    <!-- TV platform specific settings -->
+    <platform name="panasonic-tv">
+        <preference name="memory-limit" value="50MB" />
+        <preference name="cache-size" value="10MB" />
+        <preference name="timeout" value="30000" />
+    </platform>
+</widget>

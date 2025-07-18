@@ -1,0 +1,35 @@
+{
+  "name": "panasonic-tv-web-app",
+  "version": "1.0.0",
+  "description": "Web application for Panasonic Smart TVs",
+  "main": "index.html",
+  "scripts": {
+    "dev": "http-server . -p 8080 -o",
+    "start": "http-server . -p 8080",
+    "build": "echo 'No build process needed for static HTML app'",
+    "test": "echo 'No tests specified yet'",
+    "deploy:usb": "echo 'Copy files to USB drive for TV deployment'",
+    "deploy:network": "http-server . -p 8080 -a 0.0.0.0",
+    "lint": "echo 'No linting configured yet'"
+  },
+  "keywords": [
+    "panasonic",
+    "tv",
+    "web-app",
+    "smart-tv",
+    "javascript",
+    "html5"
+  ],
+  "author": "Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/falkorichter/open-panasonic-app.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
