@@ -23,7 +23,24 @@ class PanasonicTVAPI {
             'hbbtv'
         ];
         
-        return tvIndicators.some(indicator => userAgent.includes(indicator));
+        // Check for Firefox OS indicators (since Panasonic TVs are Firefox OS-based)
+        const firefoxOSIndicators = [
+            'mobile; rv:',
+            'firefox',
+            'gecko'
+        ];
+        
+        const hasTVIndicator = tvIndicators.some(indicator => userAgent.includes(indicator));
+        const hasFirefoxOS = firefoxOSIndicators.some(indicator => userAgent.includes(indicator));
+        
+        // Also check for Firefox OS APIs
+        const hasFirefoxOSAPIs = !!(
+            navigator.mozApps ||
+            navigator.mozSettings ||
+            navigator.getDeviceStorage
+        );
+        
+        return hasTVIndicator || (hasFirefoxOS && hasFirefoxOSAPIs);
     }
 
     /**
@@ -50,11 +67,27 @@ class PanasonicTVAPI {
             networkInfo: false,
             systemInfo: false,
             mediaPlayer: false,
-            fileSystem: false
+            fileSystem: false,
+            firefoxOS: false
         };
 
         // Check for Panasonic-specific APIs
         if (typeof window.panasonic !== 'undefined') {
+            capabilities.systemInfo = true;
+            capabilities.networkInfo = true;
+        }
+
+        // Check for Firefox OS APIs (since Panasonic TVs are Firefox OS-based)
+        if (navigator.mozApps) {
+            capabilities.firefoxOS = true;
+            capabilities.systemInfo = true;
+        }
+
+        if (navigator.getDeviceStorage) {
+            capabilities.fileSystem = true;
+        }
+
+        if (navigator.mozSettings) {
             capabilities.systemInfo = true;
             capabilities.networkInfo = true;
         }
@@ -81,6 +114,12 @@ class PanasonicTVAPI {
             this.getNetworkInfo();
         } catch (error) {
             console.warn('Some Panasonic APIs not available:', error.message);
+        }
+
+        // Initialize Firefox OS features if available
+        if (this.capabilities.firefoxOS && window.firefoxOSAPI) {
+            console.log('Firefox OS features available - integrating with Panasonic TV');
+            this.integrateFirefoxOSFeatures();
         }
     }
 
@@ -186,9 +225,14 @@ class PanasonicTVAPI {
      */
     getSystemInfo() {
         try {
-            // Try Panasonic-specific API
+            // Try Panasonic-specific API first
             if (window.panasonic && window.panasonic.system) {
                 return window.panasonic.system.getInfo();
+            }
+            
+            // Try Firefox OS API as fallback
+            if (navigator.mozApps && window.firefoxOSAPI) {
+                return this.getFirefoxOSSystemInfo();
             }
         } catch (error) {
             console.warn('System info not available:', error.message);
@@ -198,7 +242,7 @@ class PanasonicTVAPI {
         return {
             model: 'Unknown Panasonic TV',
             version: '1.0',
-            platform: 'Panasonic TV'
+            platform: 'Panasonic TV (Firefox OS-based)'
         };
     }
 
@@ -309,6 +353,54 @@ class PanasonicTVAPI {
         const loading = document.getElementById('loading');
         if (loading) {
             loading.style.display = 'none';
+        }
+    }
+
+    /**
+     * Integrate Firefox OS features with Panasonic TV functionality
+     */
+    integrateFirefoxOSFeatures() {
+        console.log('Integrating Firefox OS features...');
+        
+        // Listen for Firefox OS media events
+        document.addEventListener('firefoxos-video', (event) => {
+            console.log('Firefox OS video event:', event.detail);
+            // Handle video playback request
+        });
+
+        document.addEventListener('firefoxos-audio', (event) => {
+            console.log('Firefox OS audio event:', event.detail);
+            // Handle audio playback request
+        });
+
+        document.addEventListener('firefoxos-image', (event) => {
+            console.log('Firefox OS image event:', event.detail);
+            // Handle image viewing request
+        });
+    }
+
+    /**
+     * Get system information using Firefox OS APIs
+     */
+    async getFirefoxOSSystemInfo() {
+        if (!window.firefoxOSAPI) {
+            return null;
+        }
+
+        try {
+            // Get device information from Firefox OS
+            const deviceInfo = await window.firefoxOSAPI.getSystemSetting('deviceinfo.hardware');
+            const osInfo = await window.firefoxOSAPI.getSystemSetting('deviceinfo.os');
+            
+            return {
+                model: deviceInfo || 'Panasonic TV',
+                version: osInfo || '1.0',
+                platform: 'Panasonic TV (Firefox OS)',
+                firefoxOS: true
+            };
+        } catch (error) {
+            console.warn('Could not get Firefox OS system info:', error);
+            return null;
         }
     }
 }

@@ -1,23 +1,31 @@
 # Panasonic TV Web App Development Plan
 
 ## Overview
-This plan outlines the complete process for developing, debugging, and deploying web applications for older Panasonic TVs that support web app functionality.
+This plan outlines the complete process for developing, debugging, and deploying web applications for older Panasonic TVs that support web app functionality. These TVs are based on Firefox OS, Mozilla's web-based operating system.
 
 ## 1. Research & Prerequisites
 
 ### 1.1 Understanding Panasonic TV Capabilities
-- **Target Platform**: Older Panasonic TVs with web app support
+- **Target Platform**: Older Panasonic TVs with web app support (Firefox OS-based)
+- **Underlying Platform**: Firefox OS (Mozilla's web-based operating system)
+- **Runtime Engine**: Gecko (Firefox's rendering engine)
 - **Supported Technologies**: 
-  - HTML5, CSS3, JavaScript
-  - CE-HTML (Consumer Electronics HTML)
+  - HTML5, CSS3, JavaScript (Firefox OS standards)
+  - Web APIs (Firefox OS Web APIs)
+  - WebRT (Web Runtime for packaged apps)
+  - CE-HTML (Consumer Electronics HTML) - legacy support
   - HbbTV (Hybrid broadcast broadband TV) - for some models
   - Panasonic's proprietary APIs for TV-specific features
+  - Firefox OS Device APIs where available
 
 ### 1.2 Development Requirements
 - Basic web development knowledge (HTML/CSS/JavaScript)
+- Understanding of Firefox OS development patterns and APIs
+- Familiarity with Firefox OS manifest format and packaging
 - Understanding of TV-specific constraints (limited memory, processing power)
 - Remote control navigation patterns
 - TV-safe color palettes and readable fonts
+- Knowledge of Gecko rendering engine capabilities and limitations
 
 ## 2. Development Environment Setup
 
@@ -25,11 +33,15 @@ This plan outlines the complete process for developing, debugging, and deploying
 ```bash
 # Basic development tools
 - Code editor (VS Code, Sublime Text, etc.)
+- Firefox browser for testing (closest to TV environment)
+- Firefox OS Simulator (if available)
 - Web browser for initial testing
 - Local web server (Node.js http-server, Python SimpleHTTPServer, etc.)
 - Git for version control
 
-# TV-specific testing tools
+# Firefox OS / TV-specific testing tools
+- Firefox Developer Tools for debugging
+- Firefox OS App Manager (for app validation)
 - Panasonic TV Simulator/Emulator (if available)
 - Browser developer tools for debugging
 - Network tools for deployment testing
@@ -39,18 +51,20 @@ This plan outlines the complete process for developing, debugging, and deploying
 ```
 panasonic-tv-app/
 ├── index.html          # Main entry point
+├── manifest.webapp     # Firefox OS app manifest
 ├── css/
 │   ├── styles.css      # Main styles
 │   └── tv-safe.css     # TV-specific styles
 ├── js/
 │   ├── app.js          # Main application logic
 │   ├── remote-control.js # Remote control handling
-│   └── panasonic-api.js  # TV-specific API interactions
+│   ├── panasonic-api.js  # TV-specific API interactions
+│   └── firefox-os-api.js # Firefox OS API integrations
 ├── assets/
 │   ├── images/         # Optimized images for TV display
 │   └── icons/          # App icons and navigation elements
 ├── config/
-│   └── app-config.xml  # TV app configuration
+│   └── app-config.xml  # TV app configuration (legacy)
 └── docs/
     └── README.md       # App-specific documentation
 ```
@@ -79,8 +93,9 @@ Create a minimal HTML5 app with:
 npm install -g http-server
 http-server . -p 8080
 
-# Test in browser with TV simulation
-# Use browser dev tools to simulate TV constraints
+# Test in Firefox browser (closest to TV environment)
+# Use Firefox Developer Tools to simulate TV constraints
+# Test with Firefox OS Simulator if available
 ```
 
 ### 4.2 TV-Specific Testing
@@ -90,10 +105,12 @@ http-server . -p 8080
 - **Network testing**: Simulate slow/unreliable connections
 
 ### 4.3 Debugging Tools
-- Browser developer console for JavaScript debugging
+- Firefox Developer Console for JavaScript debugging (most compatible)
+- Firefox OS App Manager for app validation and debugging
 - Network tab for monitoring requests
 - Performance profiler for optimization
-- Remote debugging if TV supports it
+- Remote debugging if TV supports it (Firefox OS remote debugging)
+- Console.log debugging for TV environment
 
 ## 5. Deployment Methods
 
@@ -103,14 +120,22 @@ http-server . -p 8080
 # TV accesses via IP address: http://192.168.1.100:8080
 ```
 
-### 5.2 USB Deployment (if supported)
+### 5.2 Packaged App Deployment (Firefox OS style)
+- Package app as ZIP file with manifest.webapp
+- Deploy via USB or network installation
+- Follow Firefox OS packaging requirements
+- Use proper manifest format for TV environment
+
+### 5.3 USB Deployment (if supported)
 - Package app as static files on USB drive
+- Include proper Firefox OS manifest structure
 - Follow Panasonic's USB app structure requirements
 
-### 5.3 Web Server Deployment
+### 5.4 Web Server Deployment
 - Deploy to accessible web server
 - Ensure HTTPS if required by TV
 - Configure CORS headers if needed
+- Serve manifest.webapp with correct MIME type
 
 ## 6. Implementation Roadmap
 
@@ -141,11 +166,13 @@ http-server . -p 8080
 
 ## 7. Technical Specifications
 
-### 7.1 Supported TV Models
+### 7.1 Supported TV Models & Firefox OS Version
 Research specific Panasonic TV models and their capabilities:
 - Model numbers and firmware versions
-- Supported web standards
-- Available APIs and features
+- Firefox OS version and Gecko engine version
+- Supported web standards and APIs
+- Available Firefox OS Device APIs
+- TV-specific API extensions
 - Known limitations and workarounds
 
 ### 7.2 Performance Guidelines
@@ -158,9 +185,12 @@ Research specific Panasonic TV models and their capabilities:
 ## 8. Resources and Documentation
 
 ### 8.1 Official Resources
+- Mozilla Firefox OS Documentation
+- Firefox OS Web APIs Reference
 - Panasonic Developer Documentation
 - CE-HTML specifications
 - HbbTV standards documentation
+- Gecko Engine Documentation
 
 ### 8.2 Community Resources
 - Developer forums and communities
