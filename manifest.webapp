@@ -1,0 +1,66 @@
+{
+  "name": "Panasonic TV Web App",
+  "description": "A sample web application for Panasonic Smart TVs demonstrating Firefox OS-based TV app development",
+  "version": "1.0.0",
+  "launch_path": "/index.html",
+  "icons": {
+    "128": "/assets/icons/icon-128.png",
+    "64": "/assets/icons/icon-64.png",
+    "32": "/assets/icons/icon-32.png"
+  },
+  "developer": {
+    "name": "Developer Name",
+    "url": "https://github.com/falkorichter/open-panasonic-app"
+  },
+  "type": "web",
+  "orientation": ["landscape"],
+  "fullscreen": true,
+  "chrome": {
+    "navigation": false,
+    "statusbar": false
+  },
+  "permissions": {
+    "systemXHR": {
+      "description": "Required for TV system interactions"
+    },
+    "device-storage:videos": {
+      "description": "Access to video files",
+      "access": "readonly"
+    },
+    "device-storage:music": {
+      "description": "Access to music files", 
+      "access": "readonly"
+    },
+    "device-storage:pictures": {
+      "description": "Access to image files",
+      "access": "readonly"
+    }
+  },
+  "activities": {
+    "view": {
+      "filters": {
+        "type": ["video/*", "audio/*", "image/*"]
+      },
+      "disposition": "window",
+      "returnValue": true
+    }
+  },
+  "locales": {
+    "en": {
+      "name": "Panasonic TV Web App",
+      "description": "A sample web application for Panasonic Smart TVs"
+    }
+  },
+  "default_locale": "en",
+  "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+  "custom": {
+    "panasonic": {
+      "target-device": "tv",
+      "tv-resolution": "1920x1080",
+      "tv-safe-area": true,
+      "remote-control": true,
+      "memory-limit": "50MB",
+      "platform": "firefox-os"
+    }
+  }
+}

@@ -1,0 +1,172 @@
+/* TV-Safe Colors and Styles for Panasonic TV Apps */
+
+/* 
+ * TV-safe color palette to ensure proper display on all TV types
+ * Avoid pure whites (#FFFFFF) and pure blacks (#000000)
+ * Use colors that work well on both LCD and plasma displays
+ */
+
+:root {
+    /* TV-safe primary colors */
+    --tv-safe-white: #f0f0f0;
+    --tv-safe-black: #101010;
+    --tv-safe-blue: #4a90e2;
+    --tv-safe-red: #e74c3c;
+    --tv-safe-green: #27ae60;
+    --tv-safe-yellow: #f1c40f;
+    --tv-safe-gray: #7f8c8d;
+    
+    /* TV-safe background colors */
+    --tv-bg-primary: #1a1a1a;
+    --tv-bg-secondary: #2c3e50;
+    --tv-bg-accent: rgba(74, 144, 226, 0.1);
+    
+    /* TV-safe text colors */
+    --tv-text-primary: #e8e8e8;
+    --tv-text-secondary: #bdc3c7;
+    --tv-text-accent: #4a90e2;
+}
+
+/* Override pure colors with TV-safe alternatives */
+body {
+    background-color: var(--tv-bg-primary);
+    color: var(--tv-text-primary);
+}
+
+/* Ensure sufficient contrast for readability */
+.app-header {
+    background: var(--tv-bg-secondary);
+    color: var(--tv-text-primary);
+}
+
+.nav-button {
+    border-color: var(--tv-safe-blue);
+    color: var(--tv-text-primary);
+    background: rgba(16, 16, 16, 0.8); /* TV-safe dark background */
+}
+
+.nav-button:hover,
+.nav-button:focus,
+.nav-item.active .nav-button {
+    background: var(--tv-safe-blue);
+    color: var(--tv-safe-white);
+}
+
+/* TV-safe focus indicators */
+button:focus,
+.nav-button:focus {
+    outline: 3px solid var(--tv-safe-yellow);
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+}
+
+/* Adjust text shadows for better TV readability */
+.app-header h1 {
+    color: var(--tv-text-primary);
+    text-shadow: 2px 2px 4px var(--tv-safe-black);
+}
+
+.content-section h2 {
+    color: var(--tv-safe-blue);
+    text-shadow: 1px 1px 2px var(--tv-safe-black);
+}
+
+/* TV-safe loading spinner */
+.loading-spinner {
+    border-color: rgba(74, 144, 226, 0.2);
+    border-top-color: var(--tv-safe-blue);
+}
+
+/* Ensure readable text on all backgrounds */
+.instructions {
+    background: rgba(44, 62, 80, 0.8);
+    border-left-color: var(--tv-safe-blue);
+    color: var(--tv-text-primary);
+}
+
+.instructions h3 {
+    color: var(--tv-safe-blue);
+}
+
+.instructions li:before {
+    color: var(--tv-safe-blue);
+}
+
+/* TV-safe footer */
+.app-footer {
+    background: var(--tv-bg-secondary);
+    border-top-color: var(--tv-safe-blue);
+    color: var(--tv-text-secondary);
+}
+
+/* Additional TV-specific adjustments */
+.loading-overlay {
+    background: rgba(16, 16, 16, 0.95); /* TV-safe dark overlay */
+}
+
+.loading-overlay p {
+    color: var(--tv-text-primary);
+}
+
+/* 
+ * TV overscan compensation
+ * Some older TVs cut off edges of the display
+ */
+@media screen {
+    .tv-app {
+        margin: 2% 3%; /* Add margin to prevent content cutoff */
+        width: 94%;
+        height: 96vh;
+    }
+}
+
+/* 
+ * High contrast mode for better visibility
+ * Can be toggled via JavaScript if needed
+ */
+.high-contrast {
+    --tv-text-primary: #ffffff;
+    --tv-bg-primary: #000000;
+    --tv-safe-blue: #00aaff;
+}
+
+.high-contrast .nav-button {
+    border-width: 3px;
+}
+
+.high-contrast .content-section h2,
+.high-contrast .instructions h3 {
+    font-weight: bold;
+}
+
+/* 
+ * Large text mode for better readability
+ * Can be toggled via JavaScript if needed
+ */
+.large-text {
+    font-size: 150%;
+}
+
+.large-text .nav-button {
+    font-size: 120%;
+    padding: 18px 35px;
+}
+
+.large-text .app-header h1 {
+    font-size: 120%;
+}
+
+/* 
+ * Reduced motion for users who prefer less animation
+ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .loading-spinner {
+        animation: none;
+        border: 6px solid var(--tv-safe-blue);
+    }
+}

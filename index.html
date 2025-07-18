@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panasonic TV Web App</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/tv-safe.css">
+</head>
+<body>
+    <div id="app" class="tv-app">
+        <header class="app-header">
+            <h1>Welcome to Your Panasonic TV App</h1>
+        </header>
+        
+        <nav class="main-nav" id="mainNav">
+            <ul class="nav-list">
+                <li class="nav-item active" data-index="0">
+                    <button class="nav-button" id="home-btn">Home</button>
+                </li>
+                <li class="nav-item" data-index="1">
+                    <button class="nav-button" id="media-btn">Media</button>
+                </li>
+                <li class="nav-item" data-index="2">
+                    <button class="nav-button" id="settings-btn">Settings</button>
+                </li>
+                <li class="nav-item" data-index="3">
+                    <button class="nav-button" id="about-btn">About</button>
+                </li>
+            </ul>
+        </nav>
+        
+        <main class="app-content" id="appContent">
+            <div class="content-section active" id="home-section">
+                <h2>Home</h2>
+                <p>This is your main application area. Use the remote control to navigate.</p>
+                <div class="instructions">
+                    <h3>Navigation Instructions:</h3>
+                    <ul>
+                        <li>Use arrow keys to navigate</li>
+                        <li>Press OK/Enter to select</li>
+                        <li>Press Back to go back</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section" id="media-section">
+                <h2>Media</h2>
+                <p>Media content will be displayed here.</p>
+            </div>
+            
+            <div class="content-section" id="settings-section">
+                <h2>Settings</h2>
+                <p>App settings and preferences.</p>
+            </div>
+            
+            <div class="content-section" id="about-section">
+                <h2>About</h2>
+                <p>Information about this Panasonic TV app.</p>
+                <p>Version: 1.0.0</p>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>Use your remote control to navigate • Press OK to select</p>
+        </footer>
+    </div>
+    
+    <!-- Loading indicator -->
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+    </div>
+    
+    <script src="js/firefox-os-api.js"></script>
+    <script src="js/panasonic-api.js"></script>
+    <script src="js/remote-control.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
